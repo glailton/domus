@@ -21,4 +21,16 @@
     <string name="login">Login</string>
     <string name="not_have_account">Do not have an account?</string>
     <string name="sign_up">Sign up</string>
+
+    <!--    Registration Screen-->
+    <string name="arrow_back_icon">Arrow back icon</string>
+    <string name="create_account">Create an account</string>
+    <string name="name">Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="already_have_account">Already have an account?</string>
+    <string name="or">OR</string>
+    <string name="login_with">Login with</string>
+    <string name="login_with_facebook">Login with Facebook</string>
+    <string name="login_with_gmail">Login with Gmail</string>
 </resources>

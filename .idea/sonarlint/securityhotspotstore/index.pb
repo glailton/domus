@@ -13,12 +13,6 @@ q
 Aapp/src/main/java/glailton/io/github/domus/core/di/DomusModule.kt,a\5\a51d3eacd70331c34102b471e18fd748449e0671
 n
 >app/src/main/java/glailton/io/github/domus/DomusApplication.kt,1\d\1d91e64f15cba65b22640e83c3773b1e6890ad29
-
-Oapp/src/main/java/glailton/io/github/domus/ui/presentation/navigation/Routes.kt,6\a\6aa6a13e4bbe47e8341931c6a6d0e101dcea24f8
-ˆ
-Xapp/src/main/java/glailton/io/github/domus/ui/presentation/navigation/DomusNavigation.kt,4\5\451461f6a2e95648e47925f621673eee714c8a48
-z
-Japp/src/main/java/glailton/io/github/domus/ui/presentation/MainActivity.kt,4\1\414fb2d4d30cc2d442bd2ebac2d88059aa05bc94
 l
 <app/src/main/java/glailton/io/github/domus/ui/theme/Color.kt,b\9\b97c0b14f1b56ba3acd188fd5a253977e67c46d0
 l

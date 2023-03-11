@@ -11,12 +11,6 @@ P
  app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 n
 >app/src/main/java/glailton/io/github/domus/DomusApplication.kt,1\d\1d91e64f15cba65b22640e83c3773b1e6890ad29
-ˆ
-Xapp/src/main/java/glailton/io/github/domus/ui/presentation/navigation/DomusNavigation.kt,4\5\451461f6a2e95648e47925f621673eee714c8a48
-z
-Japp/src/main/java/glailton/io/github/domus/ui/presentation/MainActivity.kt,4\1\414fb2d4d30cc2d442bd2ebac2d88059aa05bc94
-
-Oapp/src/main/java/glailton/io/github/domus/ui/presentation/navigation/Routes.kt,6\a\6aa6a13e4bbe47e8341931c6a6d0e101dcea24f8
 q
 Aapp/src/main/java/glailton/io/github/domus/core/di/DomusModule.kt,a\5\a51d3eacd70331c34102b471e18fd748449e0671
 l
