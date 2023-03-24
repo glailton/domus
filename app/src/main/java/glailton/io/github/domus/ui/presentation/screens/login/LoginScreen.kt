@@ -35,11 +35,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import glailton.io.github.domus.R
+import glailton.io.github.domus.ui.presentation.components.EventDialog
 import glailton.io.github.domus.ui.presentation.components.RoundedButton
 import glailton.io.github.domus.ui.presentation.components.TransparentTextField
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    viewModel: LoginViewModel,
+    onLogin: (String, String) -> Unit,
+    onNavigateToRegister: () -> Unit,
+    onDismissDialog: () -> Unit
+) {
+    val state = viewModel.state.collectAsState().value
     val emailValue = rememberSaveable { mutableStateOf("") }
     val passwordValue = rememberSaveable { mutableStateOf("") }
     var passwordVisibility by remember { mutableStateOf(false) }
@@ -119,7 +127,7 @@ fun LoginScreen() {
                                 onDone = {
                                     focusManager.clearFocus()
 
-                                    //TODO("LOGIN")
+                                    onLogin.invoke(emailValue.value, passwordValue.value)
                                 }
                             ),
                             imeAction = ImeAction.Done,
@@ -159,9 +167,9 @@ fun LoginScreen() {
                     ) {
                         RoundedButton(
                             text = stringResource(id = R.string.login),
-                            displayProgressBar = false,
+                            displayProgressBar = state.displayProgressBar,
                             onClick = {
-                                //TODO("LOGIN")
+                                onLogin.invoke(emailValue.value, passwordValue.value)
                             }
                         )
 
@@ -180,7 +188,7 @@ fun LoginScreen() {
                                 )
                             },
                             onClick = {
-                                // TODO("NAVIGATE TO REGISTER SCREEN")
+                                onNavigateToRegister.invoke()
                             }
                         )
                     }
@@ -195,7 +203,7 @@ fun LoginScreen() {
                         end.linkTo(surface.end, margin = 32.dp)
                     },
                 backgroundColor = MaterialTheme.colors.primary,
-                onClick = { /*TODO*/ }
+                onClick = { onNavigateToRegister.invoke() }
             ) {
                 Icon(
                     modifier = Modifier.size(42.dp),
@@ -206,10 +214,17 @@ fun LoginScreen() {
             }
         }
     }
+
+    if(state.loginError != null){
+        EventDialog(
+            errorMessage = state.loginError,
+            onDismiss = onDismissDialog
+        )
+    }
 }
 
 @Preview
 @Composable
 fun Prev() {
-    LoginScreen()
+    LoginScreen(viewModel = koinViewModel(), {_, _ -> }, {}, {})
 }

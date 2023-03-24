@@ -2,7 +2,7 @@ buildscript {
     ext {
         kotlin_version = '1.8.10'
         compose_version = '1.4.2'
-        nav_compose = "2.5.1"
+        nav_compose = "2.5.3"
         koin_version = '3.2.0'
     }
     repositories {
@@ -13,6 +13,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:7.3.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jacoco:org.jacoco.core:0.8.7"
+        classpath 'com.google.gms:google-services:4.3.15'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

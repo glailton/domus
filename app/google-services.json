@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "186657853938",
+    "project_id": "domus-cc2bb",
+    "storage_bucket": "domus-cc2bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:186657853938:android:05d1deaffa5a43354a5b6b",
+        "android_client_info": {
+          "package_name": "glailton.io.github.domus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "186657853938-tg6dncv4djuue58tfbtv1n6cn3brq7bl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "glailton.io.github.domus",
+            "certificate_hash": "72465068ae930453b08bb1d88b53ff4051059ace"
+          }
+        },
+        {
+          "client_id": "186657853938-0rnbgaesda3mok87siheugoo8nbko0sv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3HqMfBSZKgi2F-hGCvBlZmoxz4qHerxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "186657853938-0rnbgaesda3mok87siheugoo8nbko0sv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

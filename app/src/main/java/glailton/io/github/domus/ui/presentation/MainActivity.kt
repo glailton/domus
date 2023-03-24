@@ -3,6 +3,7 @@ package glailton.io.github.domus.ui.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.BoxWithConstraints
 import glailton.io.github.domus.ui.presentation.navigation.DomusNavigation
 import glailton.io.github.domus.ui.theme.DomusTheme
 
@@ -11,7 +12,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             DomusTheme {
-                DomusNavigation()
+                BoxWithConstraints {
+                    DomusNavigation()
+                }
             }
         }
     }

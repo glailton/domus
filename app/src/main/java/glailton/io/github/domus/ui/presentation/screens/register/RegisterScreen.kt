@@ -1,4 +1,4 @@
-package glailton.io.github.domus.ui.presentation.screens.registration
+package glailton.io.github.domus.ui.presentation.screens.register
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -35,8 +35,13 @@ import glailton.io.github.domus.ui.theme.FACEBOOKCOLOR
 import glailton.io.github.domus.ui.theme.GMAILCOLOR
 
 @Composable
-fun RegistrationScreen() {
-
+fun RegisterScreen(
+    viewModel: RegisterViewModel,
+    onRegister: (String, String, String, String, String) -> Unit,
+    onBack: () -> Unit,
+    onDismissDialog: () -> Unit
+) {
+    val state = viewModel.state.collectAsState().value
     val nameValue = remember { mutableStateOf("") }
     val emailValue = remember { mutableStateOf("") }
     val phoneValue = remember { mutableStateOf("") }
@@ -60,7 +65,7 @@ fun RegistrationScreen() {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = { /*TODO("BACK BUTTON")*/ }) {
+                IconButton(onClick = { onBack.invoke() }) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
                         contentDescription = stringResource(R.string.arrow_back_icon)
@@ -147,7 +152,13 @@ fun RegistrationScreen() {
                     keyboardActions = KeyboardActions(
                         onDone = {
                             focusManager.clearFocus()
-                            // TODO("REGISTRATION")
+                            onRegister.invoke(
+                                nameValue.value,
+                                emailValue.value,
+                                phoneValue.value,
+                                passwordValue.value,
+                                confirmPasswordValue.value
+                            )
                         }
                     ),
                     imeAction = ImeAction.Done,
@@ -173,7 +184,13 @@ fun RegistrationScreen() {
                     text = stringResource(id = R.string.sign_up),
                     displayProgressBar = false,
                     onClick = {
-                        // TODO("REGISTER")
+                        onRegister.invoke(
+                            nameValue.value,
+                            emailValue.value,
+                            phoneValue.value,
+                            passwordValue.value,
+                            confirmPasswordValue.value
+                        )
                     }
                 )
 
@@ -191,7 +208,7 @@ fun RegistrationScreen() {
                         }
                     },
                     onClick = {
-                        // TODO("BACK")
+                        onBack.invoke()
                     }
                 )
             }
@@ -256,4 +273,11 @@ fun RegistrationScreen() {
             }
         }
     }
+
+//    if(state.errorMessage != null){
+//        EventDialog(
+//            errorMessage = state.errorMessage,
+//            onDismiss = onDismissDialog
+//        )
+//    }
 }
