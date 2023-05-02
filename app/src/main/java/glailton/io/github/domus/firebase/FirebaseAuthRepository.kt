@@ -1,66 +1,41 @@
 package glailton.io.github.domus.firebase
 
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
+import com.google.firebase.auth.UserProfileChangeRequest
+import glailton.io.github.domus.core.data.FirebaseResult
+import glailton.io.github.domus.core.data.await
 
-class FirebaseAuthRepository {
-    val currentUser: FirebaseUser? = Firebase.auth.currentUser
+class FirebaseAuthRepository: AuthRepository {
+    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    override val currentUser: FirebaseUser?
+        get() = firebaseAuth.currentUser
 
-    fun signInAuthUser(
+    override suspend fun login(
         email: String,
         password: String
-    ): Flow<FirebaseResult<String>> = callbackFlow {
-        trySend(FirebaseResult.Loading)
-        Firebase.auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                trySend(FirebaseResult.Success("User Connected"))
-            } else {
-                trySend(
-                    FirebaseResult.Error(
-                        Throwable(
-                            task.exception?.message ?: "Some Error Occurred"
-                        )
-                    )
-                )
-            }
-        }
-        awaitClose { close() }
-    }
-
-    suspend fun signOutAuthUser(): Flow<FirebaseResult<String>> = callbackFlow {
-        trySend(FirebaseResult.Loading)
-        try {
-            Firebase.auth.signOut()
-            trySend(FirebaseResult.Success("User Disconnected"))
+    ): FirebaseResult<FirebaseUser> {
+        return try {
+            val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
+            FirebaseResult.Success(result.user!!)
         } catch (e: Exception) {
-            trySend(FirebaseResult.Error(Throwable(e.message)))
+            e.printStackTrace()
+            FirebaseResult.Error(e)
         }
-        awaitClose { close() }
     }
 
-    suspend fun signUpAuthUser(
-        email: String,
-        password: String
-    ): Flow<FirebaseResult<String>> = callbackFlow {
-        trySend(FirebaseResult.Loading)
-        Firebase.auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    trySend(FirebaseResult.Success("User Signed"))
-                } else {
-                    trySend(
-                        FirebaseResult.Error(
-                            Throwable(
-                                task.exception?.message ?: "Some Error Occurred"
-                            )
-                        )
-                    )
-                }
-            }
-        awaitClose { close() }
+    override fun logout() {
+        firebaseAuth.signOut()
+    }
+
+    override suspend fun signup(name: String, email: String, password: String): FirebaseResult<FirebaseUser> {
+        return try {
+            val result = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+            result?.user?.updateProfile(UserProfileChangeRequest.Builder().setDisplayName(name).build())?.await()
+            FirebaseResult.Success(result.user!!)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            FirebaseResult.Error(e)
+        }
     }
 }

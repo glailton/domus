@@ -1,16 +1,34 @@
 package glailton.io.github.domus.ui.presentation.screens.register
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.Divider
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -28,6 +46,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import glailton.io.github.domus.R
+import glailton.io.github.domus.ui.presentation.components.EventDialog
 import glailton.io.github.domus.ui.presentation.components.RoundedButton
 import glailton.io.github.domus.ui.presentation.components.SocialMediaButton
 import glailton.io.github.domus.ui.presentation.components.TransparentTextField
@@ -136,13 +155,13 @@ fun RegisterScreen(
                         ) {
                             Icon(
                                 imageVector = if (passwordVisibility) Icons.Default.Visibility
-                                              else Icons.Default.VisibilityOff,
+                                else Icons.Default.VisibilityOff,
                                 contentDescription = stringResource(id = R.string.toggle_password_icon)
                             )
                         }
                     },
                     visualTransformation = if (passwordVisibility) VisualTransformation.None
-                                           else PasswordVisualTransformation()
+                    else PasswordVisualTransformation()
                 )
 
                 TransparentTextField(
@@ -175,7 +194,7 @@ fun RegisterScreen(
                         }
                     },
                     visualTransformation = if (confirmPasswordVisibility) VisualTransformation.None
-                                           else PasswordVisualTransformation()
+                    else PasswordVisualTransformation()
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -220,7 +239,7 @@ fun RegisterScreen(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
-                ){
+                ) {
                     Divider(
                         modifier = Modifier.width(24.dp),
                         thickness = 1.dp,
@@ -258,10 +277,10 @@ fun RegisterScreen(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
-            ){
+            ) {
                 SocialMediaButton(
                     text = stringResource(R.string.login_with_facebook),
-                    onClick = {  },
+                    onClick = { },
                     socialMediaColor = FACEBOOKCOLOR
                 )
 
@@ -274,10 +293,12 @@ fun RegisterScreen(
         }
     }
 
-//    if(state.errorMessage != null){
-//        EventDialog(
-//            errorMessage = state.errorMessage,
-//            onDismiss = onDismissDialog
-//        )
-//    }
+    if (state.registerError) {
+        EventDialog(
+            errorMessage = state.registerErrorMessage
+                ?: if (state.passwordMatchError) R.string.error_incorrectly_repeated_password
+                else R.string.error_input_empty,
+            onDismiss = onDismissDialog
+        )
+    }
 }

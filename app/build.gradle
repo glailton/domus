@@ -45,6 +45,9 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -91,6 +94,16 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     //firestore
     implementation 'com.google.firebase:firebase-firestore-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.8.1'
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation "io.mockk:mockk:1.12.3"
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
+    testImplementation "androidx.arch.core:core-testing:2.2.0"
+    testImplementation "io.kotest:kotest-assertions-core:5.1.0"
+
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:1.5.0-alpha01"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

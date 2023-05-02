@@ -36,8 +36,6 @@ fun NavGraphBuilder.navLoginScreen(navController: NavHostController) {
     ) {
         val viewModel: LoginViewModel = koinViewModel()
         val state = viewModel.state.collectAsState().value
-        val email = state.email
-        val password = state.password
 
         if (state.isSuccessLogin) {
             navController.navigate(
@@ -50,7 +48,7 @@ fun NavGraphBuilder.navLoginScreen(navController: NavHostController) {
         } else {
             LoginScreen(
                 viewModel = viewModel,
-                onLogin = viewModel::signInAuthUser,
+                onLogin = viewModel::login,
                 onNavigateToRegister = {
                     navController.navigate(Routes.RegistrationScreenRoute.route)
                 },
@@ -60,24 +58,34 @@ fun NavGraphBuilder.navLoginScreen(navController: NavHostController) {
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.navRegistrationScreen(navController: NavHostController) {
     composable(
         route = Routes.RegistrationScreenRoute.route
     ) {
         val viewModel: RegisterViewModel = koinViewModel()
-        RegisterScreen(
-            viewModel = viewModel,
-            onRegister = viewModel::register,
-            onBack = {
-                navController.popBackStack()
-            },
-            onDismissDialog = viewModel::hideErrorDialog
-        )
+        val state = viewModel.state.collectAsState().value
+
+        if (state.isSuccessRegister) {
+            navController.navigate(
+                Routes.HomeScreenRoute.route
+            ) {
+                popUpTo(Routes.LoginScreenRoute.route) {
+                    inclusive = true
+                }
+            }
+        } else {
+            RegisterScreen(
+                viewModel = viewModel,
+                onRegister = viewModel::signup,
+                onBack = {
+                    navController.popBackStack()
+                },
+                onDismissDialog = viewModel::hideErrorDialog
+            )
+        }
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.navHomeScreen() {
     composable(
         route = Routes.HomeScreenRoute.route

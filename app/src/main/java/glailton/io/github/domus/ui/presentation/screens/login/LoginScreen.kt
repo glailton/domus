@@ -2,17 +2,35 @@ package glailton.io.github.domus.ui.presentation.screens.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material.*
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -103,7 +121,7 @@ fun LoginScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 16.dp),
+                            .padding(horizontal = 16.dp).background(Color.White, CircleShape),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
@@ -126,7 +144,6 @@ fun LoginScreen(
                             keyboardActions = KeyboardActions(
                                 onDone = {
                                     focusManager.clearFocus()
-
                                     onLogin.invoke(emailValue.value, passwordValue.value)
                                 }
                             ),
@@ -167,7 +184,7 @@ fun LoginScreen(
                     ) {
                         RoundedButton(
                             text = stringResource(id = R.string.login),
-                            displayProgressBar = state.displayProgressBar,
+                            displayProgressBar = state.isLoading,
                             onClick = {
                                 onLogin.invoke(emailValue.value, passwordValue.value)
                             }
@@ -215,9 +232,9 @@ fun LoginScreen(
         }
     }
 
-    if(state.loginError != null){
+    if(state.loginError){
         EventDialog(
-            errorMessage = state.loginError,
+            errorMessage = state.loginErrorMessage ?: R.string.error_input_empty,
             onDismiss = onDismissDialog
         )
     }

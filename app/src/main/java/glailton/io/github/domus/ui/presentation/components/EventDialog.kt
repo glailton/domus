@@ -1,5 +1,6 @@
 package glailton.io.github.domus.ui.presentation.components
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -12,15 +13,17 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import glailton.io.github.domus.R
 
 @Composable
 fun EventDialog(
     modifier: Modifier = Modifier,
-    errorMessage: String,
+    @StringRes errorMessage: Int,
     onDismiss: (() -> Unit)? = null
 ) {
     AlertDialog(
@@ -30,7 +33,7 @@ fun EventDialog(
         onDismissRequest = { onDismiss?.invoke() },
         title = {
             Text(
-                "Error",
+                stringResource(R.string.error),
                 style = TextStyle(
                     color = MaterialTheme.colors.onSurface,
                     fontSize = 20.sp,
@@ -40,7 +43,7 @@ fun EventDialog(
         },
         text = {
             Text(
-                text = errorMessage,
+                text = stringResource(errorMessage),
                 style = TextStyle(
                     color = MaterialTheme.colors.onSurface,
                     fontSize = 16.sp
@@ -55,7 +58,7 @@ fun EventDialog(
                 horizontalArrangement = Arrangement.End
             ) {
                 TextButton(onClick = { onDismiss?.invoke() }) {
-                    Text(text = "Aceptar", style = MaterialTheme.typography.button)
+                    Text(text = stringResource(R.string.ok), style = MaterialTheme.typography.button)
                 }
             }
         }
