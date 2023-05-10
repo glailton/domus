@@ -11,7 +11,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import glailton.io.github.domus.ui.presentation.utils.TestTags.LOADING_DIALOG
 
 @Composable
 fun RoundedButton(
@@ -20,9 +22,11 @@ fun RoundedButton(
     displayProgressBar: Boolean = false,
     onClick: () -> Unit
 ) {
-    if(!displayProgressBar) {
+    if (!displayProgressBar) {
         Button(
-            modifier = modifier.width(280.dp).height(50.dp),
+            modifier = modifier
+                .width(280.dp)
+                .height(50.dp),
             onClick = onClick,
             shape = RoundedCornerShape(50),
         ) {
@@ -35,7 +39,9 @@ fun RoundedButton(
         }
     } else {
         CircularProgressIndicator(
-            modifier = Modifier.size(50.dp),
+            modifier = Modifier
+                .size(50.dp)
+                .testTag(LOADING_DIALOG),
             color = MaterialTheme.colors.primary,
             strokeWidth = 6.dp
         )

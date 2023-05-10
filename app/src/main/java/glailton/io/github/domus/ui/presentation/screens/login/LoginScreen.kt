@@ -225,7 +225,7 @@ fun LoginScreen(
                 Icon(
                     modifier = Modifier.size(42.dp),
                     imageVector = Icons.Default.ArrowForward,
-                    contentDescription = stringResource(R.string.icon_description),
+                    contentDescription = stringResource(R.string.arrow_icon_description),
                     tint = Color.White
                 )
             }

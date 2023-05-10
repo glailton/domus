@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v2
+        uses: actions/checkout@runsv2
 
       - name: Run lint
         run: ./gradlew lintDebug
@@ -37,24 +37,24 @@ jobs:
           name: unit_test_report
           path: app/build/reports/tests/testDebugUnitTest/
 
-#  instrumentation-test:
-#    needs: [ unit-test ]
-#    runs-on: macos-latest
-#    steps:
-#      - name: Checkout the code
-#        uses: actions/checkout@v2
-#
-#      - name: Run espresso tests
-#        uses: reactivecircus/android-emulator-runner@v2
-#        with:
-#          api-level: 29
-#          script: ./gradlew connectedCheck
-#
-#      - name: Upload test report
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: instrumentation_test_report
-#          path: app/build/reports/androidTests/connected/
+  instrumentation-test:
+    needs: [ unit-test ]
+    runs-on: macos-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
+      - name: Run espresso tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          script: ./gradlew connectedCheck
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v2
+        with:
+          name: instrumentation_test_report
+          path: app/build/reports/androidTests/connected/
 
 #  static-code-analysis:
 #    needs: [ instrumentation-test ]

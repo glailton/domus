@@ -29,7 +29,7 @@
     <string name="success_login">Successfully logged in</string>
     <string name="error_unknown">An unknown error occurred</string>
     <string name="login_description">Login Image</string>
-    <string name="icon_description">Forward Icon</string>
+    <string name="arrow_icon_description">Forward Icon</string>
     <string name="label_welcome">Welcome Back!</string>
     <string name="login_account">Login to your Account</string>
     <string name="email">Email</string>
