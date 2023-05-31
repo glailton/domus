@@ -1,5 +1,6 @@
 package glailton.io.github.domus.ui.presentation.screens.login
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +19,7 @@ import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -58,8 +60,23 @@ import glailton.io.github.domus.ui.presentation.components.RoundedButton
 import glailton.io.github.domus.ui.presentation.components.TransparentTextField
 import org.koin.androidx.compose.koinViewModel
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun LoginScreen(
+    viewModel: LoginViewModel,
+    onLogin: (String, String) -> Unit,
+    onNavigateToRegister: () -> Unit,
+    onDismissDialog: () -> Unit
+) {
+    Scaffold(content = {
+        LoginContent(viewModel, onLogin, onNavigateToRegister, onDismissDialog)
+    })
+
+
+}
+
+@Composable
+fun LoginContent(
     viewModel: LoginViewModel,
     onLogin: (String, String) -> Unit,
     onNavigateToRegister: () -> Unit,
@@ -168,7 +185,7 @@ fun LoginScreen(
                                 PasswordVisualTransformation()
                             }
                         )
-                        
+
                         Text(
                             modifier = Modifier.fillMaxWidth(),
                             text = stringResource(R.string.forgot_password),
@@ -176,7 +193,7 @@ fun LoginScreen(
                             textAlign = TextAlign.End
                         )
                     }
-                    
+
                     Column(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally,

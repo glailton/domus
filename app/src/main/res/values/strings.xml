@@ -52,5 +52,13 @@
     <string name="login_with_facebook">Login with Facebook</string>
     <string name="login_with_gmail">Login with Gmail</string>
     <string name="error">Error</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
+
+    <!--    Home Screen-->
+    <string name="checklist">Checklists</string>
+    <string name="receipts">Receipts</string>
+    <string name="schedules">Schedules</string>
+    <string name="checklist_description">My checklists</string>
+    <string name="receipts_description">My receipts</string>
+    <string name="schedules_description">My schedules</string>
 </resources>

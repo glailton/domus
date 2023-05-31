@@ -9,13 +9,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import glailton.io.github.domus.ui.presentation.screens.home.HomeScreen
+import glailton.io.github.domus.ui.presentation.screens.home.HomeViewModel
 import glailton.io.github.domus.ui.presentation.screens.login.LoginScreen
 import glailton.io.github.domus.ui.presentation.screens.login.LoginViewModel
 import glailton.io.github.domus.ui.presentation.screens.register.RegisterScreen
 import glailton.io.github.domus.ui.presentation.screens.register.RegisterViewModel
 import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun DomusNavigation(
     navController: NavHostController = rememberNavController()
@@ -26,7 +26,7 @@ fun DomusNavigation(
     ) {
         navLoginScreen(navController)
         navRegistrationScreen(navController)
-        navHomeScreen()
+        navHomeScreen(navController)
     }
 }
 
@@ -86,10 +86,14 @@ fun NavGraphBuilder.navRegistrationScreen(navController: NavHostController) {
     }
 }
 
-fun NavGraphBuilder.navHomeScreen() {
+fun NavGraphBuilder.navHomeScreen(navController: NavHostController) {
     composable(
         route = Routes.HomeScreenRoute.route
     ){
-        HomeScreen()
+        val viewModel: HomeViewModel = koinViewModel()
+
+        HomeScreen(
+            viewModel = viewModel
+        )
     }
 }
