@@ -60,6 +60,8 @@ class RegisterScreenTest {
                 .assertIsDisplayed()
             onNodeWithText(getResourceString(R.string.login_with))
                 .assertIsDisplayed()
+            onAllNodes(hasScrollAction())[0]
+                .performScrollToNode(hasText(getResourceString(R.string.login_with_facebook)))
             onNodeWithText(getResourceString(R.string.login_with_facebook))
                 .assertIsDisplayed()
             onAllNodes(hasScrollAction())[0]
