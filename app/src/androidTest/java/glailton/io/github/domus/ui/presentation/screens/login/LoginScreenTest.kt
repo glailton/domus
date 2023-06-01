@@ -1,4 +1,4 @@
-package glailton.io.github.domus.ui.presentation.screens
+package glailton.io.github.domus.ui.presentation.screens.login
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -11,7 +11,6 @@ import glailton.io.github.domus.rule.WebServerRule
 import glailton.io.github.domus.rule.mockLoginError
 import glailton.io.github.domus.rule.waitUntil
 import glailton.io.github.domus.ui.presentation.navigation.DomusNavigation
-import glailton.io.github.domus.ui.presentation.screens.login.LoginScreen
 import glailton.io.github.domus.ui.theme.DomusTheme
 import io.github.kakaocup.kakao.common.utilities.getResourceString
 import org.junit.Rule
