@@ -1,6 +1,5 @@
 package glailton.io.github.domus.ui.presentation.screens.login
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -19,7 +18,6 @@ import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -44,6 +42,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -60,23 +59,8 @@ import glailton.io.github.domus.ui.presentation.components.RoundedButton
 import glailton.io.github.domus.ui.presentation.components.TransparentTextField
 import org.koin.androidx.compose.koinViewModel
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun LoginScreen(
-    viewModel: LoginViewModel,
-    onLogin: (String, String) -> Unit,
-    onNavigateToRegister: () -> Unit,
-    onDismissDialog: () -> Unit
-) {
-    Scaffold(content = {
-        LoginContent(viewModel, onLogin, onNavigateToRegister, onDismissDialog)
-    })
-
-
-}
-
-@Composable
-fun LoginContent(
     viewModel: LoginViewModel,
     onLogin: (String, String) -> Unit,
     onNavigateToRegister: () -> Unit,
@@ -115,7 +99,7 @@ fun LoginContent(
                     .constrainAs(surface) {
                         bottom.linkTo(parent.bottom)
                     },
-                color = Color.White,
+                color = MaterialTheme.colors.surface,
                 shape = RoundedCornerShape(
                     topStartPercent = 8,
                     topEndPercent = 8
@@ -133,12 +117,12 @@ fun LoginContent(
                     )
                     Text(
                         text = stringResource(R.string.login_account),
-                        style = MaterialTheme.typography.h5.copy(color = MaterialTheme.colors.primary)
+                        style = MaterialTheme.typography.h5.copy(color = MaterialTheme.colors.onPrimary)
                     )
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 16.dp).background(Color.White, CircleShape),
+                            .padding(horizontal = 16.dp).background(MaterialTheme.colors.surface, CircleShape),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
@@ -223,7 +207,8 @@ fun LoginContent(
                             },
                             onClick = {
                                 onNavigateToRegister.invoke()
-                            }
+                            },
+                            style = TextStyle(color = MaterialTheme.colors.onPrimary)
                         )
                     }
                 }

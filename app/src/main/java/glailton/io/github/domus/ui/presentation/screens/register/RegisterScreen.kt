@@ -1,5 +1,6 @@
 package glailton.io.github.domus.ui.presentation.screens.register
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,6 +37,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -74,6 +76,7 @@ fun RegisterScreen(
 
     Box(
         modifier = Modifier.fillMaxWidth()
+            .background(MaterialTheme.colors.surface)
     ) {
         Column(
             modifier = Modifier
@@ -87,7 +90,8 @@ fun RegisterScreen(
                 IconButton(onClick = { onBack.invoke() }) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
-                        contentDescription = stringResource(R.string.arrow_back_icon)
+                        contentDescription = stringResource(R.string.arrow_back_icon),
+                        tint = MaterialTheme.colors.onPrimary
                     )
                 }
 
@@ -228,7 +232,8 @@ fun RegisterScreen(
                     },
                     onClick = {
                         onBack.invoke()
-                    }
+                    },
+                    style = TextStyle(color = MaterialTheme.colors.onPrimary)
                 )
             }
 
@@ -250,7 +255,8 @@ fun RegisterScreen(
                         modifier = Modifier.padding(8.dp),
                         text = stringResource(R.string.or),
                         style = MaterialTheme.typography.h6.copy(
-                            fontWeight = FontWeight.Black
+                            fontWeight = FontWeight.Black,
+                            color = MaterialTheme.colors.onPrimary
                         )
                     )
 
