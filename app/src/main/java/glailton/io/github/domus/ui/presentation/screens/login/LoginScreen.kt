@@ -78,6 +78,7 @@ fun LoginScreen(
             .background(MaterialTheme.colors.background)
     ) {
         Image(
+            modifier = Modifier.height(310.dp),
             painter = painterResource(id = R.drawable.logo),
             contentDescription = stringResource(R.string.login_description),
             contentScale = ContentScale.FillWidth
@@ -216,16 +217,16 @@ fun LoginScreen(
 
             FloatingActionButton(
                 modifier = Modifier
-                    .size(72.dp)
+                    .size(60.dp)
                     .constrainAs(fab) {
-                        top.linkTo(surface.top, margin = (-24).dp)
+                        top.linkTo(surface.top, margin = (-16).dp)
                         end.linkTo(surface.end, margin = 32.dp)
                     },
                 backgroundColor = MaterialTheme.colors.primary,
                 onClick = { onNavigateToRegister.invoke() }
             ) {
                 Icon(
-                    modifier = Modifier.size(42.dp),
+                    modifier = Modifier.size(35.dp),
                     imageVector = Icons.Default.ArrowForward,
                     contentDescription = stringResource(R.string.arrow_icon_description),
                     tint = Color.White
