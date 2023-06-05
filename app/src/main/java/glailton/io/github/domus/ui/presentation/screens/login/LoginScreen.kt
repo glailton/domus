@@ -1,6 +1,5 @@
 package glailton.io.github.domus.ui.presentation.screens.login
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -19,7 +18,6 @@ import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -61,21 +59,8 @@ import glailton.io.github.domus.ui.presentation.components.RoundedButton
 import glailton.io.github.domus.ui.presentation.components.TransparentTextField
 import org.koin.androidx.compose.koinViewModel
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun LoginScreen(
-    viewModel: LoginViewModel,
-    onLogin: (String, String) -> Unit,
-    onNavigateToRegister: () -> Unit,
-    onDismissDialog: () -> Unit
-) {
-    Scaffold(content = {
-        LoginContent(viewModel, onLogin, onNavigateToRegister, onDismissDialog)
-    })
-}
-
-@Composable
-fun LoginContent(
     viewModel: LoginViewModel,
     onLogin: (String, String) -> Unit,
     onNavigateToRegister: () -> Unit,
@@ -93,164 +78,161 @@ fun LoginContent(
             .background(MaterialTheme.colors.background)
     ) {
         Image(
-            modifier = Modifier.height(310.dp),
             painter = painterResource(id = R.drawable.logo),
             contentDescription = stringResource(R.string.login_description),
             contentScale = ContentScale.FillWidth
         )
+    }
 
-        Box(
-            modifier = Modifier
-                .fillMaxSize(),
-            contentAlignment = Alignment.BottomCenter
-        ) {
-            ConstraintLayout {
-                val (surface, fab) = createRefs()
+    Box(
+        modifier = Modifier
+            .fillMaxSize(),
+        contentAlignment = Alignment.BottomCenter
+    ) {
+        ConstraintLayout {
+            val (surface, fab) = createRefs()
 
-                Surface(
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(400.dp)
+                    .constrainAs(surface) {
+                        bottom.linkTo(parent.bottom)
+                    },
+                color = MaterialTheme.colors.surface,
+                shape = RoundedCornerShape(
+                    topStartPercent = 8,
+                    topEndPercent = 8
+                )
+            ) {
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(400.dp)
-                        .constrainAs(surface) {
-                            bottom.linkTo(parent.bottom)
-                        },
-                    color = MaterialTheme.colors.surface,
-                    shape = RoundedCornerShape(
-                        topStartPercent = 8,
-                        topEndPercent = 8
-                    )
+                        .padding(all = 16.dp),
+                    verticalArrangement = Arrangement.SpaceEvenly
                 ) {
+                    Text(
+                        text = stringResource(R.string.label_welcome),
+                        style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.Medium)
+                    )
+                    Text(
+                        text = stringResource(R.string.login_account),
+                        style = MaterialTheme.typography.h5.copy(color = MaterialTheme.colors.onPrimary)
+                    )
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(all = 16.dp),
-                        verticalArrangement = Arrangement.SpaceEvenly
+                            .padding(horizontal = 16.dp).background(MaterialTheme.colors.surface, CircleShape),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Text(
-                            text = stringResource(R.string.label_welcome),
-                            style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.Medium)
-                        )
-                        Text(
-                            text = stringResource(R.string.login_account),
-                            style = MaterialTheme.typography.h5.copy(color = MaterialTheme.colors.onPrimary)
-                        )
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp).background(MaterialTheme.colors.surface, CircleShape),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            TransparentTextField(
-                                textFieldValue = emailValue,
-                                textLabel = stringResource(R.string.email),
-                                keyboardType = KeyboardType.Email,
-                                keyboardActions = KeyboardActions(
-                                    onNext = {
-                                        focusManager.moveFocus(FocusDirection.Down)
-                                    }
-                                ),
-                                imeAction = ImeAction.Next
-                            )
-
-                            TransparentTextField(
-                                textFieldValue = passwordValue,
-                                textLabel = stringResource(R.string.password),
-                                keyboardType = KeyboardType.Password,
-                                keyboardActions = KeyboardActions(
-                                    onDone = {
-                                        focusManager.clearFocus()
-                                        onLogin.invoke(emailValue.value, passwordValue.value)
-                                    }
-                                ),
-                                imeAction = ImeAction.Done,
-                                trailingIcon = {
-                                    IconButton(onClick = {
-                                        passwordVisibility = !passwordVisibility
-                                    }) {
-                                        Icon(
-                                            imageVector = if (passwordVisibility) {
-                                                Icons.Default.Visibility
-                                            } else {
-                                                Icons.Default.VisibilityOff
-                                            },
-                                            contentDescription = stringResource(R.string.toggle_password_icon)
-                                        )
-                                    }
-                                },
-                                visualTransformation = if (passwordVisibility) {
-                                    VisualTransformation.None
-                                } else {
-                                    PasswordVisualTransformation()
+                        TransparentTextField(
+                            textFieldValue = emailValue,
+                            textLabel = stringResource(R.string.email),
+                            keyboardType = KeyboardType.Email,
+                            keyboardActions = KeyboardActions(
+                                onNext = {
+                                    focusManager.moveFocus(FocusDirection.Down)
                                 }
-                            )
+                            ),
+                            imeAction = ImeAction.Next
+                        )
 
-                            Text(
-                                modifier = Modifier.fillMaxWidth(),
-                                text = stringResource(R.string.forgot_password),
-                                style = MaterialTheme.typography.body1,
-                                textAlign = TextAlign.End
-                            )
-                        }
-
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            RoundedButton(
-                                text = stringResource(id = R.string.login),
-                                displayProgressBar = state.isLoading,
-                                onClick = {
+                        TransparentTextField(
+                            textFieldValue = passwordValue,
+                            textLabel = stringResource(R.string.password),
+                            keyboardType = KeyboardType.Password,
+                            keyboardActions = KeyboardActions(
+                                onDone = {
+                                    focusManager.clearFocus()
                                     onLogin.invoke(emailValue.value, passwordValue.value)
                                 }
-                            )
+                            ),
+                            imeAction = ImeAction.Done,
+                            trailingIcon = {
+                                IconButton(onClick = {
+                                    passwordVisibility = !passwordVisibility
+                                }) {
+                                    Icon(
+                                        imageVector = if (passwordVisibility) {
+                                            Icons.Default.Visibility
+                                        } else {
+                                            Icons.Default.VisibilityOff
+                                        },
+                                        contentDescription = stringResource(R.string.toggle_password_icon)
+                                    )
+                                }
+                            },
+                            visualTransformation = if (passwordVisibility) {
+                                VisualTransformation.None
+                            } else {
+                                PasswordVisualTransformation()
+                            }
+                        )
 
-                            ClickableText(
-                                text = buildAnnotatedString {
-                                    append(stringResource(R.string.not_have_account))
-                                    append(
-                                        AnnotatedString(
-                                            text = stringResource(R.string.sign_up),
-                                            spanStyle = SpanStyle(
-                                                color = MaterialTheme.colors.primary,
-                                                fontWeight = FontWeight.Bold,
-                                                shadow = Shadow.None
-                                            )
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = stringResource(R.string.forgot_password),
+                            style = MaterialTheme.typography.body1,
+                            textAlign = TextAlign.End
+                        )
+                    }
+
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        RoundedButton(
+                            text = stringResource(id = R.string.login),
+                            displayProgressBar = state.isLoading,
+                            onClick = {
+                                onLogin.invoke(emailValue.value, passwordValue.value)
+                            }
+                        )
+
+                        ClickableText(
+                            text = buildAnnotatedString {
+                                append(stringResource(R.string.not_have_account))
+                                append(
+                                    AnnotatedString(
+                                        text = stringResource(R.string.sign_up),
+                                        spanStyle = SpanStyle(
+                                            color = MaterialTheme.colors.primary,
+                                            fontWeight = FontWeight.Bold,
+                                            shadow = Shadow.None
                                         )
                                     )
-                                },
-                                onClick = {
-                                    onNavigateToRegister.invoke()
-                                },
-                                style = TextStyle(color = MaterialTheme.colors.onPrimary)
-                            )
-                        }
+                                )
+                            },
+                            onClick = {
+                                onNavigateToRegister.invoke()
+                            },
+                            style = TextStyle(color = MaterialTheme.colors.onPrimary)
+                        )
                     }
                 }
+            }
 
-                FloatingActionButton(
-                    modifier = Modifier
-                        .size(50.dp)
-                        .constrainAs(fab) {
-                            top.linkTo(surface.top, margin = (-24).dp)
-                            end.linkTo(surface.end, margin = 32.dp)
-                        },
-                    backgroundColor = MaterialTheme.colors.primary,
-                    onClick = { onNavigateToRegister.invoke() }
-                ) {
-                    Icon(
-                        modifier = Modifier.size(30.dp),
-                        imageVector = Icons.Default.ArrowForward,
-                        contentDescription = stringResource(R.string.arrow_icon_description),
-                        tint = Color.White
-                    )
-                }
+            FloatingActionButton(
+                modifier = Modifier
+                    .size(72.dp)
+                    .constrainAs(fab) {
+                        top.linkTo(surface.top, margin = (-24).dp)
+                        end.linkTo(surface.end, margin = 32.dp)
+                    },
+                backgroundColor = MaterialTheme.colors.primary,
+                onClick = { onNavigateToRegister.invoke() }
+            ) {
+                Icon(
+                    modifier = Modifier.size(42.dp),
+                    imageVector = Icons.Default.ArrowForward,
+                    contentDescription = stringResource(R.string.arrow_icon_description),
+                    tint = Color.White
+                )
             }
         }
     }
-
-
 
     if(state.loginError){
         EventDialog(
