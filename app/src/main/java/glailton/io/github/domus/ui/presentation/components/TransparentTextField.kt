@@ -44,7 +44,8 @@ fun TransparentTextField(
         keyboardActions = keyboardActions,
         visualTransformation = visualTransformation,
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = MaterialTheme.colors.surface
+            backgroundColor = MaterialTheme.colors.surface,
+            textColor = MaterialTheme.colors.onPrimary
         )
     )
 }

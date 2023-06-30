@@ -24,6 +24,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,35 +44,40 @@ import glailton.io.github.domus.ui.presentation.utils.colors
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel
+    viewModel: HomeViewModel,
+    onNavigateToProfile: () -> Unit
 ) {
     Scaffold(content = {
-        HomeContent(viewModel = viewModel)
+        HomeContent(viewModel = viewModel, onNavigateToProfile = onNavigateToProfile)
     })
 }
 
 @Composable
-fun HomeContent(viewModel: HomeViewModel) {
+fun HomeContent(viewModel: HomeViewModel, onNavigateToProfile: () -> Unit) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        HomeHeader(viewModel)
+        HomeHeader(viewModel, onNavigateToProfile)
         HomeItems()
     }
 }
 
 @Composable
-fun HomeHeader(viewModel: HomeViewModel) {
-    val user = viewModel.user
+fun HomeHeader(viewModel: HomeViewModel, onNavigateToProfile: () -> Unit) {
+    val state = viewModel.state.collectAsState().value
+    LaunchedEffect(Unit) {
+        viewModel.getUser()
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        ProfileImage(user)
+        ProfileImage(user = state.user, onNavigateToProfile)
         SettingsImage()
     }
 }
@@ -153,5 +160,5 @@ fun HomeItemCard(item: HomeItem) {
 @Preview
 @Composable
 fun HomeScreenPrev() {
-    HomeScreen(viewModel = viewModel())
+    HomeScreen(viewModel = viewModel(), onNavigateToProfile = {})
 }

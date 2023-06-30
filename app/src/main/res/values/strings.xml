@@ -61,4 +61,9 @@
     <string name="checklist_description">My checklists</string>
     <string name="receipts_description">My receipts</string>
     <string name="schedules_description">My schedules</string>
+
+    <!--    Profile Screen-->
+    <string name="profile_title">Edit Profile</string>
+    <string name="birthday">Birthday</string>
+    <string name="save">Save</string>
 </resources>

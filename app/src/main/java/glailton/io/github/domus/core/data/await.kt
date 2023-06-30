@@ -17,3 +17,12 @@ suspend fun <T> Task<T>.await(): T {
         }
     }
 }
+
+suspend fun <T> Task<T>.suspendableAwait(): T = suspendCancellableCoroutine { continuation ->
+    addOnSuccessListener { result ->
+        continuation.resume(result, null)
+    }
+    addOnFailureListener { exception ->
+        continuation.resumeWithException(exception)
+    }
+}

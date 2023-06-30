@@ -1,7 +1,7 @@
 package glailton.io.github.domus.ui.presentation.navigation
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -12,6 +12,8 @@ import glailton.io.github.domus.ui.presentation.screens.home.HomeScreen
 import glailton.io.github.domus.ui.presentation.screens.home.HomeViewModel
 import glailton.io.github.domus.ui.presentation.screens.login.LoginScreen
 import glailton.io.github.domus.ui.presentation.screens.login.LoginViewModel
+import glailton.io.github.domus.ui.presentation.screens.profile.ProfileScreen
+import glailton.io.github.domus.ui.presentation.screens.profile.ProfileViewModel
 import glailton.io.github.domus.ui.presentation.screens.register.RegisterScreen
 import glailton.io.github.domus.ui.presentation.screens.register.RegisterViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -27,6 +29,7 @@ fun DomusNavigation(
         navLoginScreen(navController)
         navRegistrationScreen(navController)
         navHomeScreen(navController)
+        navProfileScreen(navController)
     }
 }
 
@@ -37,23 +40,25 @@ fun NavGraphBuilder.navLoginScreen(navController: NavHostController) {
         val viewModel: LoginViewModel = koinViewModel()
         val state = viewModel.state.collectAsState().value
 
-        if (state.isSuccessLogin) {
-            navController.navigate(
-                Routes.HomeScreenRoute.route
-            ) {
-                popUpTo(Routes.LoginScreenRoute.route) {
-                    inclusive = true
+        LoginScreen(
+            viewModel = viewModel,
+            onLogin = viewModel::login,
+            onNavigateToRegister = {
+                navController.navigate(Routes.RegistrationScreenRoute.route)
+            },
+            onDismissDialog = viewModel::hideErrorDialog
+        )
+
+        LaunchedEffect(state.isSuccessLogin) {
+            if (state.isSuccessLogin) {
+                navController.navigate(
+                    Routes.HomeScreenRoute.route
+                ) {
+                    popUpTo(Routes.LoginScreenRoute.route) {
+                        inclusive = true
+                    }
                 }
             }
-        } else {
-            LoginScreen(
-                viewModel = viewModel,
-                onLogin = viewModel::login,
-                onNavigateToRegister = {
-                    navController.navigate(Routes.RegistrationScreenRoute.route)
-                },
-                onDismissDialog = viewModel::hideErrorDialog
-            )
         }
     }
 }
@@ -93,6 +98,21 @@ fun NavGraphBuilder.navHomeScreen(navController: NavHostController) {
         val viewModel: HomeViewModel = koinViewModel()
 
         HomeScreen(
+            viewModel = viewModel,
+            onNavigateToProfile = {
+                navController.navigate(Routes.ProfileScreenRoute.route)
+            }
+        )
+    }
+}
+
+fun NavGraphBuilder.navProfileScreen(navController: NavHostController) {
+    composable(
+        route = Routes.ProfileScreenRoute.route
+    ){
+        val viewModel: ProfileViewModel = koinViewModel()
+
+        ProfileScreen(
             viewModel = viewModel
         )
     }

@@ -5,13 +5,13 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuthException
 import glailton.io.github.domus.core.data.FirebaseResult
 import glailton.io.github.domus.core.utils.authErrors
-import glailton.io.github.domus.firebase.FirebaseAuthRepository
+import glailton.io.github.domus.firebase.FirebaseAuthRepositoryImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class RegisterViewModel(private val firebaseAuth: FirebaseAuthRepository) : ViewModel() {
+class RegisterViewModel(private val firebaseAuth: FirebaseAuthRepositoryImpl) : ViewModel() {
     private val _state = MutableStateFlow(RegisterState())
     val state = _state.asStateFlow()
 

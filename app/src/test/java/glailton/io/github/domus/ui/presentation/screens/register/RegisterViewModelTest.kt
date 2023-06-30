@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseUser
 import glailton.io.github.domus.core.data.FirebaseResult
-import glailton.io.github.domus.firebase.FirebaseAuthRepository
+import glailton.io.github.domus.firebase.FirebaseAuthRepositoryImpl
 import glailton.io.github.domus.utils.CoroutineRules
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
@@ -26,7 +26,7 @@ class RegisterViewModelTest {
     @get:Rule
     val coroutineRule = CoroutineRules()
 
-    private val repository: FirebaseAuthRepository = mockk()
+    private val repository: FirebaseAuthRepositoryImpl = mockk()
 
     @Before
     fun setup() {

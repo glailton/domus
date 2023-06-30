@@ -1,5 +1,6 @@
 package glailton.io.github.domus.ui.presentation.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -19,26 +20,27 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.google.firebase.auth.FirebaseUser
+import glailton.io.github.domus.core.models.User
 import glailton.io.github.domus.ui.theme.Blue500
 
 @Composable
-fun ProfileImage(user: FirebaseUser?) {
+fun ProfileImage(user: User?, onClick: () -> Unit) {
     Card(
         shape = CircleShape,
         modifier = Modifier
             .padding(8.dp)
             .size(50.dp)
+            .clickable { onClick.invoke() }
     ) {
         Row(
             modifier = Modifier,
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            if (user?.photoUrl != null) {
+            if (!user?.photo.isNullOrEmpty()) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(user.photoUrl)
+                        .data(user?.photo)
                         .crossfade(true)
                         .build(),
                     contentDescription = null,
@@ -54,7 +56,7 @@ fun ProfileImage(user: FirebaseUser?) {
                                 radius = this.size.maxDimension
                             )
                         },
-                    text = "GC",
+                    text = user?.name?.take(2)?.uppercase() ?: "",
                     style = TextStyle(color = Color.White, fontSize = 20.sp)
                 )
             }
