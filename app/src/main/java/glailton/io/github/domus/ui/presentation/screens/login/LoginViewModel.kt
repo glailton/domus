@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuthException
 import glailton.io.github.domus.core.data.FirebaseResult
+import glailton.io.github.domus.core.data.local.DataStoreManager
+import glailton.io.github.domus.core.data.local.PreferenceDataStoreConstants.USER_KEY
 import glailton.io.github.domus.core.utils.authErrors
 import glailton.io.github.domus.firebase.FirebaseAuthRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +14,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val firebaseAuth: FirebaseAuthRepository
+    private val firebaseAuth: FirebaseAuthRepository,
+    private val dataStoreManager: DataStoreManager
 ) : ViewModel() {
     private val _state = MutableStateFlow(LoginState())
     val state = _state.asStateFlow()
@@ -28,6 +31,7 @@ class LoginViewModel(
             when (val result = firebaseAuth.login(email, password)) {
                 is FirebaseResult.Success -> {
                     hideLoading()
+                    dataStoreManager.putPreference(USER_KEY, result.data.uid)
                     _state.update {
                         it.copy(
                             isSuccessLogin = true,

@@ -20,11 +20,12 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun DomusNavigation(
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    startDestination: String
 ) {
     NavHost(
         navController = navController,
-        startDestination = Routes.LoginScreenRoute.route
+        startDestination = startDestination
     ) {
         navLoginScreen(navController)
         navRegistrationScreen(navController)
@@ -40,15 +41,6 @@ fun NavGraphBuilder.navLoginScreen(navController: NavHostController) {
         val viewModel: LoginViewModel = koinViewModel()
         val state = viewModel.state.collectAsState().value
 
-        LoginScreen(
-            viewModel = viewModel,
-            onLogin = viewModel::login,
-            onNavigateToRegister = {
-                navController.navigate(Routes.RegistrationScreenRoute.route)
-            },
-            onDismissDialog = viewModel::hideErrorDialog
-        )
-
         LaunchedEffect(state.isSuccessLogin) {
             if (state.isSuccessLogin) {
                 navController.navigate(
@@ -60,6 +52,15 @@ fun NavGraphBuilder.navLoginScreen(navController: NavHostController) {
                 }
             }
         }
+
+        LoginScreen(
+            viewModel = viewModel,
+            onLogin = viewModel::login,
+            onNavigateToRegister = {
+                navController.navigate(Routes.RegistrationScreenRoute.route)
+            },
+            onDismissDialog = viewModel::hideErrorDialog
+        )
     }
 }
 
@@ -70,31 +71,33 @@ fun NavGraphBuilder.navRegistrationScreen(navController: NavHostController) {
         val viewModel: RegisterViewModel = koinViewModel()
         val state = viewModel.state.collectAsState().value
 
-        if (state.isSuccessRegister) {
-            navController.navigate(
-                Routes.HomeScreenRoute.route
-            ) {
-                popUpTo(Routes.LoginScreenRoute.route) {
-                    inclusive = true
+        LaunchedEffect(state.isSuccessRegister) {
+            if (state.isSuccessRegister) {
+                navController.navigate(
+                    Routes.HomeScreenRoute.route
+                ) {
+                    popUpTo(Routes.LoginScreenRoute.route) {
+                        inclusive = true
+                    }
                 }
             }
-        } else {
-            RegisterScreen(
-                viewModel = viewModel,
-                onRegister = viewModel::signup,
-                onBack = {
-                    navController.popBackStack()
-                },
-                onDismissDialog = viewModel::hideErrorDialog
-            )
         }
+
+        RegisterScreen(
+            viewModel = viewModel,
+            onRegister = viewModel::signup,
+            onBack = {
+                navController.popBackStack()
+            },
+            onDismissDialog = viewModel::hideErrorDialog
+        )
     }
 }
 
 fun NavGraphBuilder.navHomeScreen(navController: NavHostController) {
     composable(
         route = Routes.HomeScreenRoute.route
-    ){
+    ) {
         val viewModel: HomeViewModel = koinViewModel()
 
         HomeScreen(
@@ -109,7 +112,7 @@ fun NavGraphBuilder.navHomeScreen(navController: NavHostController) {
 fun NavGraphBuilder.navProfileScreen(navController: NavHostController) {
     composable(
         route = Routes.ProfileScreenRoute.route
-    ){
+    ) {
         val viewModel: ProfileViewModel = koinViewModel()
 
         ProfileScreen(
