@@ -59,16 +59,11 @@ import glailton.io.github.domus.ui.theme.GMAILCOLOR
 @Composable
 fun RegisterScreen(
     viewModel: RegisterViewModel,
-    onRegister: (String, String, String, String, String) -> Unit,
+    onRegister: () -> Unit,
     onBack: () -> Unit,
     onDismissDialog: () -> Unit
 ) {
     val state = viewModel.state.collectAsState().value
-    val nameValue = remember { mutableStateOf("") }
-    val emailValue = remember { mutableStateOf("") }
-    val phoneValue = remember { mutableStateOf("") }
-    val passwordValue = remember { mutableStateOf("") }
-    val confirmPasswordValue = remember { mutableStateOf("") }
 
     var passwordVisibility by remember { mutableStateOf(false) }
     var confirmPasswordVisibility by remember { mutableStateOf(false) }
@@ -111,8 +106,9 @@ fun RegisterScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 TransparentTextField(
-                    textFieldValue = nameValue,
+                    textFieldValue = state.name,
                     textLabel = stringResource(id = R.string.name),
+                    onValueChanged = { viewModel.updateInfo(name = it) },
                     keyboardType = KeyboardType.Text,
                     keyboardActions = KeyboardActions(
                         onNext = {
@@ -123,8 +119,9 @@ fun RegisterScreen(
                 )
 
                 TransparentTextField(
-                    textFieldValue = emailValue,
+                    textFieldValue = state.email,
                     textLabel = stringResource(id = R.string.email),
+                    onValueChanged = { viewModel.updateInfo(email = it) },
                     keyboardType = KeyboardType.Email,
                     keyboardActions = KeyboardActions(
                         onNext = { focusManager.moveFocus(FocusDirection.Down) }
@@ -133,8 +130,9 @@ fun RegisterScreen(
                 )
 
                 TransparentTextField(
-                    textFieldValue = phoneValue,
+                    textFieldValue = state.phoneNumber,
                     textLabel = stringResource(R.string.phone_number),
+                    onValueChanged = { viewModel.updateInfo(phoneNumber = it) },
                     maxChar = 10,
                     keyboardType = KeyboardType.Phone,
                     keyboardActions = KeyboardActions(
@@ -144,8 +142,9 @@ fun RegisterScreen(
                 )
 
                 TransparentTextField(
-                    textFieldValue = passwordValue,
+                    textFieldValue = state.password,
                     textLabel = stringResource(id = R.string.password),
+                    onValueChanged = { viewModel.updateInfo(password = it) },
                     keyboardType = KeyboardType.Password,
                     keyboardActions = KeyboardActions(
                         onNext = {
@@ -171,19 +170,14 @@ fun RegisterScreen(
                 )
 
                 TransparentTextField(
-                    textFieldValue = confirmPasswordValue,
+                    textFieldValue = state.confirmPassword,
                     textLabel = stringResource(R.string.confirm_password),
+                    onValueChanged = { viewModel.updateInfo(confirmPassword = it) },
                     keyboardType = KeyboardType.Password,
                     keyboardActions = KeyboardActions(
                         onDone = {
                             focusManager.clearFocus()
-                            onRegister.invoke(
-                                nameValue.value,
-                                emailValue.value,
-                                phoneValue.value,
-                                passwordValue.value,
-                                confirmPasswordValue.value
-                            )
+                            onRegister.invoke()
                         }
                     ),
                     imeAction = ImeAction.Done,
@@ -209,13 +203,7 @@ fun RegisterScreen(
                     text = stringResource(id = R.string.sign_up),
                     displayProgressBar = false,
                     onClick = {
-                        onRegister.invoke(
-                            nameValue.value,
-                            emailValue.value,
-                            phoneValue.value,
-                            passwordValue.value,
-                            confirmPasswordValue.value
-                        )
+                        onRegister.invoke()
                     }
                 )
 

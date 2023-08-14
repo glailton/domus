@@ -8,7 +8,6 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -18,7 +17,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 @Composable
 fun TransparentTextField(
     modifier: Modifier = Modifier,
-    textFieldValue: MutableState<String>,
+    textFieldValue: String,
+    onValueChanged: (value: String) -> Unit,
     textLabel: String,
     maxChar: Int? = null,
     capitalization: KeyboardCapitalization = KeyboardCapitalization.None,
@@ -30,8 +30,8 @@ fun TransparentTextField(
 ) {
     OutlinedTextField(
         modifier = modifier.fillMaxWidth(),
-        value = textFieldValue.value.take(maxChar ?: 40),
-        onValueChange = { textFieldValue.value = it },
+        value = textFieldValue.take(maxChar ?: 40),
+        onValueChange = { onValueChanged(it) },
         label = {
             Text(text = textLabel)
         },

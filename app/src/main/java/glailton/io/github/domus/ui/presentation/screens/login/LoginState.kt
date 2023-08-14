@@ -9,4 +9,7 @@ data class LoginState(
     @StringRes val loginErrorMessage: Int? = null,
     val isSuccessLogin: Boolean = false,
     val isLoading: Boolean = false
-)
+) {
+    fun withEmail(email: String) = copy(email = email)
+    fun withPassword(password: String) = copy(password = password)
+}

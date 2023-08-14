@@ -20,9 +20,11 @@ class LoginViewModel(
     private val _state = MutableStateFlow(LoginState())
     val state = _state.asStateFlow()
 
-    fun login(email: String, password: String) {
+    fun login() {
         viewModelScope.launch {
             handleLoading()
+            val email = state.value.email
+            val password = state.value.password
             if (!validateLoginForm(email, password)) {
                 _state.update { it.copy(loginError = true) }
                 hideLoading()
@@ -51,6 +53,14 @@ class LoginViewModel(
                 }
             }
         }
+    }
+
+    fun updateInfo(email: String = "", password: String = "") {
+        when {
+            email.isNotEmpty() -> _state.update { it.withEmail(email) }
+            password.isNotEmpty() -> _state.update { it.withPassword(password) }
+        }
+
     }
 
     fun hideErrorDialog() {

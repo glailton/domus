@@ -20,13 +20,12 @@ class RegisterViewModel(
     private val _state = MutableStateFlow(RegisterState())
     val state = _state.asStateFlow()
 
-    fun signup(
-        name: String,
-        email: String,
-        phoneNumber: String,
-        password: String,
-        confirmPassword: String
-    ) {
+    fun signup() {
+        val name = _state.value.name
+        val email = _state.value.email
+        val phoneNumber = _state.value.phoneNumber
+        val password = _state.value.password
+        val confirmPassword = _state.value.confirmPassword
         viewModelScope.launch {
             handleLoading()
             if (!validateRegisterForm(name, email, phoneNumber, password, confirmPassword)) {
@@ -63,6 +62,36 @@ class RegisterViewModel(
                         )
                     }
                 }
+            }
+        }
+    }
+
+    fun updateInfo(
+        name: String = "",
+        email: String = "",
+        phoneNumber: String = "",
+        password: String = "",
+        confirmPassword: String = ""
+    ) {
+        when {
+            name.isNotEmpty() -> {
+                _state.update { it.withName(name) }
+            }
+
+            email.isNotEmpty() -> {
+                _state.update { it.withEmail(email) }
+            }
+
+            phoneNumber.isNotEmpty() -> {
+                _state.update { it.withPhoneNumber(phoneNumber) }
+            }
+
+            password.isNotEmpty() -> {
+                _state.update { it.withPassword(password) }
+            }
+
+            confirmPassword.isNotEmpty() -> {
+                _state.update { it.withConfirmPassword(confirmPassword) }
             }
         }
     }

@@ -11,4 +11,12 @@ data class RegisterState(
     val name: String = "",
     val email: String = "",
     val phoneNumber: String = "",
-)
+    val password: String = "",
+    val confirmPassword: String = "",
+) {
+    fun withName(name: String) = copy(name = name)
+    fun withEmail(email: String) = copy(email = email)
+    fun withPhoneNumber(phoneNumber: String) = copy(phoneNumber = phoneNumber)
+    fun withPassword(password: String) = copy(password = password)
+    fun withConfirmPassword(confirmPassword: String) = copy(confirmPassword = confirmPassword)
+}

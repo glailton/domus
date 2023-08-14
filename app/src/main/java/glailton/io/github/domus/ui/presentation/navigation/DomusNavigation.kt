@@ -114,9 +114,25 @@ fun NavGraphBuilder.navProfileScreen(navController: NavHostController) {
         route = Routes.ProfileScreenRoute.route
     ) {
         val viewModel: ProfileViewModel = koinViewModel()
+        val state = viewModel.state.collectAsState().value
+
+        LaunchedEffect(state.isSaved) {
+            if (state.isSaved) {
+                navController.navigate(
+                    Routes.HomeScreenRoute.route
+                ) {
+                    popUpTo(Routes.LoginScreenRoute.route) {
+                        inclusive = true
+                    }
+                }
+            }
+        }
 
         ProfileScreen(
-            viewModel = viewModel
+            viewModel = viewModel,
+            onBack = {
+                navController.popBackStack()
+            }
         )
     }
 }

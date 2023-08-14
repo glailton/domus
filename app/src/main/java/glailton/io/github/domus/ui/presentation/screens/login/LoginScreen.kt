@@ -62,7 +62,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel,
-    onLogin: (String, String) -> Unit,
+    onLogin: () -> Unit,
     onNavigateToRegister: () -> Unit,
     onDismissDialog: () -> Unit
 ) {
@@ -128,8 +128,9 @@ fun LoginScreen(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         TransparentTextField(
-                            textFieldValue = emailValue,
+                            textFieldValue = state.email,
                             textLabel = stringResource(R.string.email),
+                            onValueChanged = { viewModel.updateInfo(email = it) },
                             keyboardType = KeyboardType.Email,
                             keyboardActions = KeyboardActions(
                                 onNext = {
@@ -140,13 +141,14 @@ fun LoginScreen(
                         )
 
                         TransparentTextField(
-                            textFieldValue = passwordValue,
+                            textFieldValue = state.password,
                             textLabel = stringResource(R.string.password),
+                            onValueChanged = { viewModel.updateInfo(password = it) },
                             keyboardType = KeyboardType.Password,
                             keyboardActions = KeyboardActions(
                                 onDone = {
                                     focusManager.clearFocus()
-                                    onLogin.invoke(emailValue.value, passwordValue.value)
+                                    onLogin.invoke()
                                 }
                             ),
                             imeAction = ImeAction.Done,
@@ -188,7 +190,7 @@ fun LoginScreen(
                             text = stringResource(id = R.string.login),
                             displayProgressBar = state.isLoading,
                             onClick = {
-                                onLogin.invoke(emailValue.value, passwordValue.value)
+                                onLogin.invoke()
                             }
                         )
 
@@ -246,5 +248,5 @@ fun LoginScreen(
 @Preview
 @Composable
 fun Prev() {
-    LoginScreen(viewModel = koinViewModel(), {_, _ -> }, {}, {})
+    LoginScreen(viewModel = koinViewModel(), {}, {}, {})
 }
