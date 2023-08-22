@@ -12,6 +12,7 @@ import glailton.io.github.domus.R
 import glailton.io.github.domus.rule.WebServerRule
 import glailton.io.github.domus.rule.waitUntil
 import glailton.io.github.domus.ui.presentation.navigation.DomusNavigation
+import glailton.io.github.domus.ui.presentation.navigation.Routes
 import glailton.io.github.domus.ui.theme.DomusTheme
 import io.github.kakaocup.kakao.common.utilities.getResourceString
 import org.junit.Rule
@@ -32,7 +33,7 @@ class RegisterScreenTest {
             DomusTheme {
                 RegisterScreen(
                     viewModel = getViewModel(),
-                    onRegister = { _, _, _, _, _ -> },
+                    onRegister = { },
                     onDismissDialog = {},
                     onBack = {}
                 )
@@ -75,7 +76,7 @@ class RegisterScreenTest {
     fun should_display_dialog_error_on_register_screen() {
         composeTestRule.setContent {
             DomusTheme {
-                DomusNavigation()
+                DomusNavigation(startDestination = Routes.LoginScreenRoute.route)
             }
         }
 

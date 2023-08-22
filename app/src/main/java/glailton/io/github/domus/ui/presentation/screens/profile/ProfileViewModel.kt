@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(
-    private val firebaseAuth: FirebaseAuthRepository,
+    firebaseAuth: FirebaseAuthRepository,
     private val firestoreRepository: FirestoreRepository
 ) : ViewModel() {
     private val _state = MutableStateFlow(ProfileState())

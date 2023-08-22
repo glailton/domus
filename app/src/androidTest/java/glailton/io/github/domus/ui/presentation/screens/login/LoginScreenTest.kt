@@ -11,6 +11,7 @@ import glailton.io.github.domus.rule.WebServerRule
 import glailton.io.github.domus.rule.mockLoginError
 import glailton.io.github.domus.rule.waitUntil
 import glailton.io.github.domus.ui.presentation.navigation.DomusNavigation
+import glailton.io.github.domus.ui.presentation.navigation.Routes
 import glailton.io.github.domus.ui.theme.DomusTheme
 import io.github.kakaocup.kakao.common.utilities.getResourceString
 import org.junit.Rule
@@ -31,7 +32,7 @@ class LoginScreenTest {
             DomusTheme {
                 LoginScreen(
                     viewModel = getViewModel(),
-                    onLogin = { _, _ -> },
+                    onLogin = { },
                     onNavigateToRegister = {},
                     onDismissDialog = {}
                 )
@@ -66,7 +67,7 @@ class LoginScreenTest {
 
         composeTestRule.setContent {
             DomusTheme {
-                DomusNavigation()
+                DomusNavigation(startDestination = Routes.LoginScreenRoute.route)
             }
         }
 
@@ -96,7 +97,7 @@ class LoginScreenTest {
     fun should_display_dialog_error_on_login_screen() {
         composeTestRule.setContent {
             DomusTheme {
-                DomusNavigation()
+                DomusNavigation(startDestination = Routes.LoginScreenRoute.route)
             }
         }
 
