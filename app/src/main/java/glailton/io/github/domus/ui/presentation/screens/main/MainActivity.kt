@@ -20,7 +20,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             DomusTheme {
                 BoxWithConstraints {
-                    DomusNavigation(startDestination = if (viewModel.userId.isNotEmpty()) Routes.HomeScreenRoute.route else Routes.LoginScreenRoute.route)
+                    DomusNavigation(startDestination = if
+                            (viewModel.userId.isNotEmpty()) Routes.HomeScreenRoute.route
+                    else Routes.LoginScreenRoute.route)
                 }
             }
         }

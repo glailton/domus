@@ -2,7 +2,6 @@ package glailton.io.github.domus.ui.presentation.components
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -24,8 +23,9 @@ class TransparentTextFieldTest {
         composeTestRule.setContent {
             DomusTheme {
                 TransparentTextField(
-                    textFieldValue = mutableStateOf("Test"),
+                    textFieldValue = "Test",
                     textLabel = getResourceString(R.string.email),
+                    onValueChanged = {},
                     imeAction = ImeAction.Next,
                     keyboardType = KeyboardType.Email,
                     keyboardActions = KeyboardActions(
