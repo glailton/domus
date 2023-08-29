@@ -15,10 +15,12 @@ import glailton.io.github.domus.ui.presentation.navigation.DomusNavigation
 import glailton.io.github.domus.ui.presentation.navigation.Routes
 import glailton.io.github.domus.ui.theme.DomusTheme
 import io.github.kakaocup.kakao.common.utilities.getResourceString
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.koin.androidx.compose.getViewModel
 
+@Ignore("Until find a way to test with mock firestore")
 class RegisterScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
